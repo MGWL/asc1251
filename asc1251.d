@@ -10,14 +10,15 @@
 » -      00BB
 « -      00AB
 */
-module asc1251;
+module asc1251;		// Наименование модуля
 
 import std.ascii;
 import std.conv;
 import std.utf;
 
- import std.stdio;
+import std.stdio;
 
+// Базовые определения
 bool isDigit1251(char c) pure nothrow {   return (mm1251[c] & tDigit) != 0;  }
 bool isLower1251E(char c) pure nothrow {   return (mm1251[c] & tEl) != 0;  }
 bool isUpper1251E(char c) pure nothrow {   return (mm1251[c] & tEu) != 0;  }
@@ -28,7 +29,6 @@ bool isLetters1251E(char c) pure nothrow {  return (mm1251[c] & (tEu + tEl)) != 
 bool isLetters1251R(char c) pure nothrow {  return (mm1251[c] & (tRu + tRl)) != 0; }
 bool isLetters1251(char c) pure nothrow {  return (mm1251[c] & (tRu + tRl + tEu + tEl)) != 0; }
 bool isPrintLetters1251(char c) pure nothrow {  return (mm1251[c] & (tPrint)) != 0; }
-
 
 unittest {
     foreach(char c; "0123456789")  assert(asc1251.isDigit1251(c));
@@ -41,6 +41,9 @@ unittest {
     foreach(char c; uppercase1251R ~ lowercase1251R)    assert(asc1251.isLetters1251R(c));
 
 }
+/++
+	Удалить все непечатные символы слева, до первого печатного
++/		
 char[] LTrim1251(char[] str) {
     char[] rez;
     if(str.length==0) return rez;
